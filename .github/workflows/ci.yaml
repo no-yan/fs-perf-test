@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  bench:
+  bench-go:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
@@ -22,6 +22,21 @@ jobs:
           repository: microsoft/typescript
           path: target
 
+      - uses: actions/setup-go@v5
+
       - run: go run test.go target
 
+  bench-python:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: microsoft/typescript
+          path: target
+      - uses: actions/setup-python@v5
       - run: python test.py target
